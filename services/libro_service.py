@@ -2,7 +2,7 @@
 
 from sqlalchemy.orm import Session
 from models.libro import  Libro
-from schemas.schemas import LibroCreate
+from schemas.schemas import LibroCreate, LibroUpdate
 
 
 def listar_libros(db:Session):
@@ -47,7 +47,41 @@ def buscar_por_id(db:Session, id:int) -> Libro | None:
     """
     return db.query(Libro).filter(Libro.id == id).first()
 
+# ---------------------------------------------------------
+# ACTUALIZAR LIBRO
+# ---------------------------------------------------------
+def actualizar_libro(
+    db: Session,
+    id: int,
+    datos: LibroUpdate
+) -> Libro | None:  # [NUEVO]
+    """
+    Actualiza un libro existente.
 
+    Busca el libro mediante su id y aplica los cambios
+    recibidos en el esquema LibroUpdate.
+
+    Si el libro no existe, devuelve None.
+    """
+
+    libro = db.query(Libro).filter(Libro.id == id).first()  # [NUEVO]
+
+    if libro is None:  # [NUEVO]
+        return None  # [NUEVO]
+
+    if datos.titulo is not None:  # [NUEVO]
+        libro.titulo = datos.titulo  # [NUEVO]
+
+    if datos.autor is not None:  # [NUEVO]
+        libro.autor = datos.autor  # [NUEVO]
+
+    if datos.rating is not None:  # [NUEVO]
+        libro.rating = datos.rating  # [NUEVO]
+
+    db.commit()  # [NUEVO]
+    db.refresh(libro)  # [NUEVO]
+
+    return libro  # [NUEVO]
 
 
 
