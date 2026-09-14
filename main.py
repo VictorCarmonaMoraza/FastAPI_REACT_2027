@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from  api.libros import router as libros_router
+
 #Crear instancia principal de la aplicacion
 app = FastAPI(
     title = "API Biblioteca Personal",
@@ -15,3 +17,7 @@ def raiz():
     Endpoint basico que confirma que la API esta funcionando
     """
     return {"Mensaje":"API Biblioteca funcionando correctamente"}
+
+
+#[NUEVO] Incluir router de libros
+app.include_router(libros_router) #Nuevo
