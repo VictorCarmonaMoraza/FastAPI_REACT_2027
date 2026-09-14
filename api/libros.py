@@ -5,11 +5,11 @@
 from fastapi import APIRouter, Depends
 from typing import List
 from sqlalchemy.orm import Session
+from starlette import status
 
 from database import get_db
-from services.libro_service import listar_libros
-from schemas.schemas import LibroRead
-
+from services.libro_service import listar_libros,crear_libro
+from schemas.schemas import LibroRead, LibroCreate
 
 #Crear router con prefijo y etiquetas
 router = APIRouter(
@@ -27,5 +27,15 @@ def obtener_libros(db:Session=Depends(get_db)):
     """
     libros= listar_libros(db)
     return libros
+
+
+@router.post("/",response_model=LibroRead,status_code=201)
+def crear_libro_enpoint(datos:LibroCreate,db:Session=Depends(get_db)):
+    """
+    Crea un nuevo libro en la base de datos
+    Recibe un cuerpo JSON validado con LibroCreate
+    """
+    nuevo_libro = crear_libro(db,datos)
+    return nuevo_libro
 
 

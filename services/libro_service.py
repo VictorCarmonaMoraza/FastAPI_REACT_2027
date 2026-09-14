@@ -2,6 +2,7 @@
 
 from sqlalchemy.orm import Session
 from models.libro import  Libro
+from schemas.schemas import LibroCreate
 
 
 def listar_libros(db:Session):
@@ -15,3 +16,29 @@ def listar_libros(db:Session):
         Lista de instancias del modelo Libro
     """
     return db.query(Libro).all()
+
+
+def crear_libro(db:Session, datos:LibroCreate):
+    """
+    Crea un nuevo libro en la base de datos usando los datos validados
+    del esquema LibroCreate
+    """
+
+    #Crear instancia del modelo usando los datos recibidos
+    nuevo_libro =Libro(
+        titulo = datos.titulo,
+        autor= datos.autor,
+        rating = datos.rating
+    )
+    #Guardar en la base de datos
+    db.add(nuevo_libro)
+    db.commit()
+    db.refresh(nuevo_libro)
+
+    return nuevo_libro
+
+
+
+
+
+
