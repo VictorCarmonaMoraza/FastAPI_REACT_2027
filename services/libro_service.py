@@ -38,6 +38,19 @@ def crear_libro(db:Session, datos:LibroCreate):
     return nuevo_libro
 
 
+def buscar_por_id(db:Session, id:int) -> Libro | None:
+    """
+    Busca un libro por su id.
+
+    Devuelve el libro si existe.
+    Si no existe, devuelve None.
+    """
+    return db.query(Libro).filter(Libro.id == id).first()
+
+
+
+
+
 
 
 
