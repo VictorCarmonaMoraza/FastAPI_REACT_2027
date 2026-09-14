@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from starlette import status
 
 from database import get_db
-from services.libro_service import listar_libros, crear_libro, buscar_por_id, actualizar_libro
+from services.libro_service import listar_libros, crear_libro, buscar_por_id, actualizar_libro,eliminar_libro
 from schemas.schemas import LibroRead, LibroCreate, LibroUpdate
 
 #Crear router con prefijo y etiquetas
@@ -83,3 +83,26 @@ def actualizar_libro_endpoint(  # [NUEVO]
 
     return libro  # [NUEVO]
 
+# ---------------------------------------------------------
+# ELIMINAR LIBRO
+# ---------------------------------------------------------
+@router.delete("/{id}")  # [NUEVO]
+def eliminar_libro_endpoint(  # [NUEVO]
+    id: int,  # [NUEVO]
+    db: Session = Depends(get_db)  # [NUEVO]
+):  # [NUEVO]
+    """
+    Elimina un libro existente.
+    """
+
+    eliminado = eliminar_libro(db, id)  # [NUEVO]
+
+    if not eliminado:  # [NUEVO]
+        raise HTTPException(  # [NUEVO]
+            status_code=status.HTTP_404_NOT_FOUND,  # [NUEVO]
+            detail="Libro no encontrado"  # [NUEVO]
+        )
+
+    return {  # [NUEVO]
+        "mensaje": "Libro eliminado correctamente"  # [NUEVO]
+    }  # [NUEVO]

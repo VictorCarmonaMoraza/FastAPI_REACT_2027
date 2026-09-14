@@ -86,6 +86,25 @@ def actualizar_libro(
 
 
 
+# ---------------------------------------------------------
+# ELIMINAR LIBRO
+# ---------------------------------------------------------
+def eliminar_libro(db: Session, id: int) -> bool:  # [NUEVO]
+    """
+    Elimina un libro de la base de datos.
 
+    Busca el libro mediante su id.
+    Si existe, lo elimina y confirma los cambios.
+    Si no existe, devuelve False.
+    """
 
+    libro = db.query(Libro).filter(Libro.id == id).first()  # [NUEVO]
+
+    if libro is None:  # [NUEVO]
+        return False  # [NUEVO]
+
+    db.delete(libro)  # [NUEVO]
+    db.commit()  # [NUEVO]
+
+    return True  # [NUEVO]
 
