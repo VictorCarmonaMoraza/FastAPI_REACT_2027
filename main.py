@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
 from  api.libros import router as libros_router
+from fastapi.middleware.cors import CORSMiddleware
+
+from setting.cors import  CorsConfig
 
 #Crear instancia principal de la aplicacion
 app = FastAPI(
@@ -8,6 +11,13 @@ app = FastAPI(
     description="Backend REST con FastAPI para gestionar libros",
     version="1.0.0"
 )
+
+
+# --------------------------------------------------------------
+# Configuracion de CORS
+# ---------------------------------------------------------------
+# Configuramos CORS
+CorsConfig.configurar(app)
 
 #Endpoint de prueba(ruta raiz)
 # Sirve para verificar que la API esta viva

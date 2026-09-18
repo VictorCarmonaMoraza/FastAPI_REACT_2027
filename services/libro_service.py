@@ -15,7 +15,7 @@ def listar_libros(db:Session):
     Retorna:
         Lista de instancias del modelo Libro
     """
-    return db.query(Libro).all()
+    return db.query(Libro).order_by(Libro.id).all()
 
 
 def crear_libro(db:Session, datos:LibroCreate):

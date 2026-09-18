@@ -1,4 +1,4 @@
-from sqlalchemy import Column,  Integer, String
+from sqlalchemy import Column, Integer, String, Float
 from database import Base
 
 class Libro(Base):
@@ -17,4 +17,4 @@ class Libro(Base):
     autor = Column(String(255),nullable=False)
 
     # Rating entre 1 y 5 (entero obligatorio)
-    rating = Column(Integer, nullable=False)
+    rating = Column(Float, nullable=False)

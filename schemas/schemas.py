@@ -35,7 +35,7 @@ class LibroBase(BaseModel):
     # ge=1 -> mayor o igual que 1
     # le=5 -> menor o igual que 5
     # Por tanto, el rating debe estar entre 1 y 5.
-    rating: int = Field(
+    rating: float = Field(
         ...,
         ge=1,
         le=5,
@@ -107,7 +107,7 @@ class LibroUpdate(LibroBase):
 
     # El rating también es opcional,
     # pero si se proporciona debe estar entre 1 y 5.
-    rating: Optional[int] = Field(
+    rating: Optional[float] = Field(
         None,
         ge=1,
         le=5
@@ -154,7 +154,7 @@ class LibroRead(BaseModel):
     autor: str
 
     # Calificación del libro
-    rating: int
+    rating: float
 
     # Permite que Pydantic pueda crear este esquema
     # a partir de un objeto ORM de SQLAlchemy.
